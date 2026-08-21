@@ -1,0 +1,97 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background: #F4EBD0; /* sand */
+    color: #0D1B2A; /* navy */
+}
+
+/* Header */
+header {
+    text-align: center;
+    padding: 40px 20px;
+    background: #0D1B2A; /* navy */
+    color: white;
+}
+
+.logo {
+    width: 140px;
+    height: auto;
+    margin-bottom: 15px;
+}
+
+/* Box layout */
+.box {
+    background: white;
+    padding: 25px;
+    margin: 25px auto;
+    border-radius: 12px;
+    max-width: 800px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    border-left: 6px solid #2EC4B6; /* teal */
+}
+
+/* Enquiry form */
+.enquiry-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.enquiry-form label {
+    font-weight: bold;
+    color: #0D1B2A;
+}
+
+.enquiry-form input,
+.enquiry-form textarea {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 16px;
+}
+
+/* Buttons */
+.button {
+    display: block;
+    background: #2EC4B6; /* teal */
+    color: white;
+    padding: 15px;
+    text-align: center;
+    margin: 15px auto;
+    text-decoration: none;
+    width: 250px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+/* Home button */
+.home-btn {
+    background: #0D1B2A; /* navy */
+    color: white;
+    padding: 12px 20px;
+    text-align: center;
+    display: block;
+    width: 200px;
+    margin: 20px auto;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/* Deal boxes */
+.deal-box {
+    background: white;
+    padding: 15px;
+    margin: 15px 0;
+    border-radius: 10px;
+    border-left: 6px solid #2EC4B6; /* teal */
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    font-size: 18px;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 20px;
+    color: #0D1B2A;
+}
