@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Voyaura Travel Deals</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+    <img src="logo.png" alt="Voyaura Logo" class="logo">
+    <h1>Voyaura</h1>
+    <p>Find More. Travel Better.</p>
+</header>
+
+<section class="box">
+    <h2>Latest Travel Deals</h2>
+    <div id="deals"></div>
+</section>
+
+<a class="home-btn" href="index.html">Home</a>
+
+<footer>
+    <p>© 2026 Voyaura</p>
+</footer>
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyDaSbE-nTEdhUtWj15TFN8oPxttBkmSEYU",
+        authDomain: "loufindstravel1.firebaseapp.com",
+        projectId: "loufindstravel1",
+        storageBucket: "loufindstravel1.firebasestorage.app",
+        messagingSenderId: "244866057956",
+        appId: "1:244866057956:web:970359a8951391a8bd4ef1",
+        measurementId: "G-4NLWVMNMBH"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    async function loadOffers() {
+        const querySnapshot = await getDocs(collection(db, "offers"));
+        const dealsDiv = document.getElementById("deals");
+
+        dealsDiv.innerHTML = "";
+
+        querySnapshot.forEach(docSnap => {
+            const data = docSnap.data();
+
+            const div = document.createElement("div");
+            div.className = "deal-box";
+
+            div.innerHTML = `
+                <p><strong>${data.text}</strong></p>
+                <p style="font-size: 14px; color: #555;">
+                    Added: ${new Date(data.createdAt).toLocaleString()}
+                </p>
+            `;
+
+            dealsDiv.appendChild(div);
+        });
+    }
+
+    loadOffers();
+</script>
+
+</body>
+</html>

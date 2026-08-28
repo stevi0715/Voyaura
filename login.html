@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Voyaura Admin Login</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+    <img src="logo.png" alt="Voyaura Logo" class="logo">
+    <h1>Voyaura Admin</h1>
+</header>
+
+<section class="box">
+    <h2>Admin Login</h2>
+
+    <input id="email" type="email" placeholder="Email">
+    <input id="password" type="password" placeholder="Password">
+    <button class="button" id="loginBtn">Login</button>
+</section>
+
+<footer>
+    <p>© 2026 Voyaura</p>
+</footer>
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAdLupniZJXhs0Q7zn8O66s9WrOg1yLrv4",
+  authDomain: "voyaura-admin.firebaseapp.com",
+  projectId: "voyaura-admin",
+  storageBucket: "voyaura-admin.firebasestorage.app",
+  messagingSenderId: "903202312127",
+  appId: "1:903202312127:web:a8127b004296b09d7b1b0a",
+  measurementId: "G-PVXNFXY8GW"
+};
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    document.getElementById("loginBtn").onclick = () => {
+        const email = document.getElementById("email").value;
+        const pass = document.getElementById("password").value;
+
+        signInWithEmailAndPassword(auth, email, pass)
+            .then(() => window.location.href = "admin.html")
+            .catch(err => alert(err.message));
+    };
+</script>
+
+</body>
+</html>
