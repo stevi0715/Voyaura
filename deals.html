@@ -3,6 +3,7 @@
 <head>
     <title>Voyaura Travel Deals</title>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -13,12 +14,16 @@
     <p>Find More. Travel Better.</p>
 </header>
 
-<section class="box">
-    <h2>Latest Travel Deals</h2>
-    <div id="deals"></div>
-</section>
+<div class="container">
 
-<a class="home-btn" href="index.html">Home</a>
+    <section class="box">
+        <h2>Latest Travel Deals</h2>
+        <div id="deals"></div>
+    </section>
+
+    <a class="home-btn" href="index.html">Home</a>
+
+</div>
 
 <footer>
     <p>© 2026 Voyaura</p>
@@ -28,7 +33,6 @@
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
     import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-    // ⭐ Voyaura Firebase Project (the correct one)
     const firebaseConfig = {
         apiKey: "AIzaSyAdLupniZJXhs0Q7zn8O66s9WrOg1yLrv4",
         authDomain: "voyaura-admin.firebaseapp.com",
@@ -52,7 +56,7 @@
             const data = docSnap.data();
 
             const div = document.createElement("div");
-            div.className = "deal-box";
+            div.className = "deal-box"; // ⭐ uses your teal/navy brand style
 
             div.innerHTML = `
                 <p><strong>${data.text}</strong></p>
