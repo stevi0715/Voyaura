@@ -3,117 +3,115 @@
 <head>
     <title>Admin Dashboard</title>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
+<div class="container">
 
     <h2>Welcome to the Admin Dashboard</h2>
     <p>If you can see this, you are logged in.</p>
 
-    <textarea id="noticeText" rows="6" cols="50" placeholder="Type your offer here..."></textarea><br><br>
+    <textarea id="noticeText" rows="6" placeholder="Type your offer here..."></textarea>
     <button onclick="saveNotice()">Save Offer</button>
-
     <button onclick="logout()">Logout</button>
 
     <h3>Saved Offers</h3>
     <div id="offersList"></div>
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+</div>
 
-        import {
-            getFirestore,
-            collection,
-            addDoc,
-            doc,
-            getDocs,
-            deleteDoc,
-            getDoc,
-            setDoc
-        } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyAdLupniZJXhs0Q7zn8O66s9WrOg1yLrv4",
-  authDomain: "voyaura-admin.firebaseapp.com",
-  projectId: "voyaura-admin",
-  storageBucket: "voyaura-admin.firebasestorage.app",
-  messagingSenderId: "903202312127",
-  appId: "1:903202312127:web:a8127b004296b09d7b1b0a",
-  measurementId: "G-PVXNFXY8GW"
-};
+    import {
+        getFirestore,
+        collection,
+        addDoc,
+        doc,
+        getDocs,
+        deleteDoc
+    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
+    const firebaseConfig = {
+        apiKey: "AIzaSyAdLupniZJXhs0Q7zn8O66s9WrOg1yLrv4",
+        authDomain: "voyaura-admin.firebaseapp.com",
+        projectId: "voyaura-admin",
+        storageBucket: "voyaura-admin.firebasestorage.app",
+        messagingSenderId: "903202312127",
+        appId: "1:903202312127:web:a8127b004296b09d7b1b0a",
+        measurementId: "G-PVXNFXY8GW"
+    };
 
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const auth = getAuth(app);
 
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-        const auth = getAuth(app);
+    onAuthStateChanged(auth, user => {
+        if (!user) {
+            window.location.href = "login.html";
+        } else {
+            loadOffers();
+        }
+    });
 
-        onAuthStateChanged(auth, user => {
-            if (!user) {
-                window.location.href = "login.html";
-            } else {
-                loadOffers();
-            }
+    // Save a NEW offer
+    async function saveNotice() {
+        const text = document.getElementById("noticeText").value;
+
+        await addDoc(collection(db, "offers"), {
+            text: text,
+            createdAt: new Date().toISOString()
         });
 
-        // ⭐ Save a NEW offer (does not overwrite)
-        async function saveNotice() {
-            const text = document.getElementById("noticeText").value;
+        document.getElementById("noticeText").value = "";
+        loadOffers();
+        alert("Offer saved!");
+    }
 
-            await addDoc(collection(db, "offers"), {
-                text: text,
-                createdAt: new Date().toISOString()
-            });
+    // Load ALL offers
+    async function loadOffers() {
+        const querySnapshot = await getDocs(collection(db, "offers"));
+        const list = document.getElementById("offersList");
 
-            document.getElementById("noticeText").value = "";
-            loadOffers();
-            alert("Offer saved!");
-        }
+        list.innerHTML = "";
 
-        // ⭐ Load ALL offers
-        async function loadOffers() {
-            const querySnapshot = await getDocs(collection(db, "offers"));
-            const list = document.getElementById("offersList");
+        querySnapshot.forEach(docSnap => {
+            const data = docSnap.data();
+            const id = docSnap.id;
 
-            list.innerHTML = "";
+            const div = document.createElement("div");
+            div.className = "offer-box";  // ⭐ MOBILE-FRIENDLY CLASS
 
-            querySnapshot.forEach(docSnap => {
-                const data = docSnap.data();
-                const id = docSnap.id;
+            div.innerHTML = `
+                <p><strong>Offer:</strong> ${data.text}</p>
+                <p><em>Created:</em> ${new Date(data.createdAt).toLocaleString()}</p>
+                <button onclick="deleteOffer('${id}')">Delete Offer</button>
+            `;
 
-                const div = document.createElement("div");
-                div.style.border = "1px solid #ccc";
-                div.style.padding = "10px";
-                div.style.margin = "10px 0";
-                div.style.background = "#f9f9f9";
+            list.appendChild(div);
+        });
+    }
 
-                div.innerHTML = `
-                    <p><strong>Offer:</strong> ${data.text}</p>
-                    <p><em>Created:</em> ${new Date(data.createdAt).toLocaleString()}</p>
-                    <button onclick="deleteOffer('${id}')">Delete Offer</button>
-                `;
+    // Delete an offer
+    async function deleteOffer(id) {
+        await deleteDoc(doc(db, "offers", id));
+        loadOffers();
+    }
 
-                list.appendChild(div);
-            });
-        }
+    // Make functions global
+    window.saveNotice = saveNotice;
+    window.loadOffers = loadOffers;
+    window.deleteOffer = deleteOffer;
 
-        // ⭐ Delete an offer
-        async function deleteOffer(id) {
-            await deleteDoc(doc(db, "offers", id));
-            loadOffers();
-        }
-
-        // ⭐ Make functions global
-        window.saveNotice = saveNotice;
-        window.loadOffers = loadOffers;
-        window.deleteOffer = deleteOffer;
-
-        window.logout = function () {
-            signOut(auth).then(() => {
-                window.location.href = "login.html";
-            });
-        };
-    </script>
+    window.logout = function () {
+        signOut(auth).then(() => {
+            window.location.href = "login.html";
+        });
+    };
+</script>
 
 </body>
 </html>
