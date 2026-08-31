@@ -3,6 +3,7 @@
 <head>
     <title>Voyaura Admin Login</title>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -12,13 +13,17 @@
     <h1>Voyaura Admin</h1>
 </header>
 
-<section class="box">
-    <h2>Admin Login</h2>
+<div class="container">
 
-    <input id="email" type="email" placeholder="Email">
-    <input id="password" type="password" placeholder="Password">
-    <button class="button" id="loginBtn">Login</button>
-</section>
+    <section class="box">
+        <h2>Admin Login</h2>
+
+        <input id="email" type="email" placeholder="Email">
+        <input id="password" type="password" placeholder="Password">
+        <button class="button" id="loginBtn">Login</button>
+    </section>
+
+</div>
 
 <footer>
     <p>© 2026 Voyaura</p>
@@ -28,22 +33,22 @@
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
     import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyAdLupniZJXhs0Q7zn8O66s9WrOg1yLrv4",
-  authDomain: "voyaura-admin.firebaseapp.com",
-  projectId: "voyaura-admin",
-  storageBucket: "voyaura-admin.firebasestorage.app",
-  messagingSenderId: "903202312127",
-  appId: "1:903202312127:web:a8127b004296b09d7b1b0a",
-  measurementId: "G-PVXNFXY8GW"
-};
+    const firebaseConfig = {
+        apiKey: "AIzaSyAdLupniZJXhs0Q7zn8O66s9WrOg1yLrv4",
+        authDomain: "voyaura-admin.firebaseapp.com",
+        projectId: "voyaura-admin",
+        storageBucket: "voyaura-admin.firebasestorage.app",
+        messagingSenderId: "903202312127",
+        appId: "1:903202312127:web:a8127b004296b09d7b1b0a",
+        measurementId: "G-PVXNFXY8GW"
+    };
 
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
 
     document.getElementById("loginBtn").onclick = () => {
-        const email = document.getElementById("email").value;
-        const pass = document.getElementById("password").value;
+        const email = document.getElementById("email").value.trim();
+        const pass = document.getElementById("password").value.trim();
 
         signInWithEmailAndPassword(auth, email, pass)
             .then(() => window.location.href = "admin.html")
