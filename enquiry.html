@@ -3,6 +3,7 @@
 <head>
     <title>Voyaura Enquiry</title>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -13,28 +14,30 @@
     <p>Find More. Travel Better.</p>
 </header>
 
-<section class="box">
-    <h2>Send an Enquiry</h2>
+<div class="container">
 
-<form class="enquiry-form" action="https://api.web3forms.com/submit" method="POST">
-    <input type="hidden" name="access_key" value="c8d93aed-36ae-4e20-a718-286d86068f24">
+    <section class="box">
+        <h2>Send an Enquiry</h2>
 
-    <label>Name</label>
-    <input type="text" name="name" required>
+        <form class="enquiry-form" action="https://api.web3forms.com/submit" method="POST">
+            <input type="hidden" name="access_key" value="c8d93aed-36ae-4e20-a718-286d86068f24">
 
-    <label>Email</label>
-    <input type="email" name="email" required>
+            <label>Name</label>
+            <input type="text" name="name" required>
 
-    <label>Your Message</label>
-    <textarea rows="5" name="message" required></textarea>
+            <label>Email</label>
+            <input type="email" name="email" required>
 
-    <button class="button">Submit</button>
-</form>
+            <label>Your Message</label>
+            <textarea rows="5" name="message" required></textarea>
 
+            <button class="button">Submit</button>
+        </form>
+    </section>
 
-</section>
+    <a class="home-btn" href="index.html">🏠 Home</a>
 
-<a class="home-btn" href="index.html">🏠 Home</a>
+</div>
 
 <footer>
     <p>© 2026 Voyaura</p>
